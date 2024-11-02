@@ -8,7 +8,7 @@
         // Relationship M-M with Category through BookCategory
         public ICollection<BookCategory> BookCategories { get; set; }
         // Relationship M-M with Library through BookLibrary
-        public ICollection<BookLibrary> BookLibraies { get; set; }
+        public ICollection<BookLibrary> BookLibraries { get; set; } 
         // Relationship 1-M with Review
         public ICollection<Review> Reviews { get; set; }
 

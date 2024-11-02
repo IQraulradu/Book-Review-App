@@ -11,6 +11,7 @@
         public Country Country { get; set; }
 
         // Relationship M - M Book through BookLibrary
-        public ICollection<Library> BookLibraries { get; set; }
+        public ICollection<BookLibrary> BookLibraries { get; set; } 
+
     }
 }

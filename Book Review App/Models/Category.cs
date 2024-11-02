@@ -6,6 +6,6 @@
         public string Name { get; set; }
 
         // Relationship M - M
-        public ICollection<Category> BookCategory { get; set; }
+        public ICollection<BookCategory> BookCategories { get; set; }
     }
 }
