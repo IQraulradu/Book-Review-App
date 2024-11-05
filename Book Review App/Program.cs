@@ -1,5 +1,7 @@
 using Book_Review_App;
+using Book_Review_App.BookRepository;
 using Book_Review_App.Data;
+using Book_Review_App.Interface;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -14,6 +16,8 @@ builder.Services.AddDbContext<DataContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
 });
 
+builder.Services.AddScoped<IBookRepository, BookRepository>();
+builder.Services.AddControllers();
 
 var app = builder.Build();
 
@@ -32,6 +36,7 @@ using (var scope = app.Services.CreateScope())
 }
 
     app.UseHttpsRedirection();
+    app.MapControllers();
     app.Run();
 
 
