@@ -37,6 +37,7 @@ namespace Book_Review_App
                 var book1 = new Book
                 {
                     Name = "The Great Gatsby",
+                    Author = "F. Scott Fitzgerald",
                     PublicationDate = new DateTime(1925, 4, 10),
                     BookCategories = new List<BookCategory>
                     {
@@ -45,8 +46,8 @@ namespace Book_Review_App
                     },
                     Reviews = new List<Review>
                     {
-                        new Review {Title = "A Masterpice", Text = "An insightful look at the American Dream.", Reviewer = reviewer1 },
-                        new Review {Title = "Overrated", Text = "Didn't live up to the hype.", Reviewer = reviewer2 }
+                        new Review {Title = "A Masterpice", Text = "An insightful look at the American Dream.", Rating = 5, Reviewer = reviewer1 },
+                        new Review {Title = "Overrated", Text = "Didn't live up to the hype.", Rating = 3, Reviewer = reviewer2 }
 
                     }
                 };
@@ -54,6 +55,7 @@ namespace Book_Review_App
                 var book2 = new Book
                 {
                     Name = "1984",
+                    Author = "George Orwell",
                     PublicationDate = new DateTime(1949, 6, 8),
                     BookCategories = new List<BookCategory>
                     {
@@ -62,14 +64,15 @@ namespace Book_Review_App
                     },
                     Reviews = new List<Review>
                     {
-                        new Review {Title = "Chilling", Text = "Still relevant today.", Reviewer = reviewer3 },
-                        new Review {Title = "Depressing but insightful", Text = "A dark yet powerful novel", Reviewer = reviewer1 }
+                        new Review {Title = "Chilling", Text = "Still relevant today.", Rating = 5, Reviewer = reviewer3 },
+                        new Review {Title = "Depressing but insightful", Text = "A dark yet powerful novel", Rating = 4, Reviewer = reviewer1 }
                     }
                 };
 
                 var book3 = new Book
                 {
                     Name = "To kill a Mockingbird",
+                    Author = "Harper Lee",
                     PublicationDate = new DateTime(1960, 7, 11),
                     BookCategories = new List<BookCategory>
                     {
@@ -78,8 +81,8 @@ namespace Book_Review_App
                     },
                     Reviews = new List<Review>
                     {
-                        new Review {Title = "A true classic", Text = "Powerful themes and memorable characters.", Reviewer = reviewer2 },
-                        new Review {Title = "Moving and timeless", Text = "An essential read for everyone.", Reviewer = reviewer3}
+                        new Review {Title = "A true classic", Text = "Powerful themes and memorable characters.", Rating = 5, Reviewer = reviewer2 },
+                        new Review {Title = "Moving and timeless", Text = "An essential read for everyone.", Rating = 5, Reviewer = reviewer3}
                     }
                 };
 
