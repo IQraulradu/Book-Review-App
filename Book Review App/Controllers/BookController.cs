@@ -19,9 +19,10 @@ namespace Book_Review_App.Controllers
             _mapper = mapper;
         }
 
+   
 
         [HttpGet]
-        [ProducesResponseType(200, Type = typeof(IEnumerable<BookDto>))]
+        [ProducesResponseType(200, Type = typeof(IEnumerable<Book>))]
         public IActionResult GetBooks()
         {
             var books = _mapper.Map<List<BookDto>>(_bookRepository.GetBooks());
@@ -32,7 +33,7 @@ namespace Book_Review_App.Controllers
         }
 
         [HttpGet("{bookId}")]
-        [ProducesResponseType(200, Type = typeof(BookDto))]
+        [ProducesResponseType(200, Type = typeof(Book))]
         [ProducesResponseType(400)]
         public IActionResult GetBook(int bookId)
         {

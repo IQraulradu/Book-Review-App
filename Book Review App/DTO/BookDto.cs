@@ -1,4 +1,6 @@
-﻿namespace Book_Review_App.DTO
+﻿using Book_Review_App.Models;
+
+namespace Book_Review_App.DTO
 {
     public class BookDto
     {
@@ -6,6 +8,8 @@
         public string Name { get; set; }
         public DateTime PublicationDate { get; set; }
         public string Author { get; set; }
+
+        public List<CategoryDto> Categories {get;set;}
 
         
     }
