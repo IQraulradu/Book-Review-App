@@ -19,6 +19,7 @@ builder.Services.AddDbContext<DataContext>(options =>
 
 builder.Services.AddScoped<IBookRepository, BookRepository>();
 builder.Services.AddScoped<ICategoryRepository, CategoryRepository>();
+builder.Services.AddScoped<ICountryRepository, CountryRepository>();
 builder.Services.AddControllers();
 
 var app = builder.Build();
