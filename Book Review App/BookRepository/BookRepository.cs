@@ -15,19 +15,12 @@ namespace Book_Review_App.BookRepository
         }
         public ICollection<Book> GetBooks()
         {
-            return _context.Books
-                .Include(b => b.BookCategories)
-                .ThenInclude(bc => bc.Category)
-                .OrderBy(b => b.Id)
-                .ToList();
+            return _context.Books.OrderBy(b => b.Id).ToList();
         }
 
         public Book GetBook(int id)
         {
-            return _context.Books
-                .Include(b => b.BookCategories)
-                    .ThenInclude(bc => bc.Category)
-                .FirstOrDefault(b => b.Id == id);
+            return _context.Books.FirstOrDefault(b => b.Id == id);
         }
 
         public Book GetBook(string name)

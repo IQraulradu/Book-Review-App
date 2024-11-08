@@ -8,9 +8,6 @@ namespace Book_Review_App.DTO
         public string Name { get; set; }
         public DateTime PublicationDate { get; set; }
         public string Author { get; set; }
-
-        public List<CategoryDto> Categories {get;set;}
-
-        
+ 
     }
 }
