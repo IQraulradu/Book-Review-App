@@ -19,6 +19,9 @@ namespace Book_Review_App.Helper
 
 
             CreateMap<Library, LibraryDto>();
+            CreateMap<LibraryDto, Library>();
+
+
             CreateMap<Review, ReviewDto>();
             CreateMap<Reviewer, ReviewerDto>();
         }

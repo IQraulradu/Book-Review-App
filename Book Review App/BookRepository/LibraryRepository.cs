@@ -40,5 +40,17 @@ namespace Book_Review_App.BookRepository
         {
             return _context.Libraries.Any(l => l.Id == libraryId);
         }
+
+        public bool CreateLibrary(Library library)
+        {
+            _context.Add(library);
+            return Save();
+        }
+
+        public bool Save()
+        {
+            var saved = _context.SaveChanges();
+            return saved > 0 ? true : false;
+        }
     }
 }

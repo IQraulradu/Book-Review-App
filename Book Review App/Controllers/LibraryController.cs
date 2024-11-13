@@ -11,10 +11,12 @@ namespace Book_Review_App.Controllers
     public class LibraryController : Controller
     {
         private readonly ILibraryRepository _libraryRepository;
+        private readonly ICountryRepository _countryRepository;
         private readonly IMapper _mapper;
-        public LibraryController(ILibraryRepository libraryRepository, IMapper mapper)
+        public LibraryController(ILibraryRepository libraryRepository, ICountryRepository countryRepository, IMapper mapper)
         {
             _libraryRepository = libraryRepository;
+            _countryRepository = countryRepository;
             _mapper = mapper;
         }
 
@@ -61,6 +63,37 @@ namespace Book_Review_App.Controllers
                 return BadRequest(ModelState);
 
             return Ok(library);
+        }
+
+        [HttpPost]
+        [ProducesResponseType(204)]
+        [ProducesResponseType(400)]
+        public IActionResult CreateLibrary([FromQuery] int countryId, [FromBody] LibraryDto libraryCreate)
+        {
+            if (libraryCreate == null)
+                return BadRequest(ModelState);
+
+            var library = _libraryRepository.GetLibraries().Where(l => l.Name.Trim().ToUpper() == libraryCreate.Name.TrimEnd().ToUpper()).FirstOrDefault();
+
+            if (library != null)
+            {
+                ModelState.AddModelError("", "Library already exists");
+                return StatusCode(422, ModelState);
+            }
+
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+
+            var libraryMap = _mapper.Map<Library>(libraryCreate);
+            libraryMap.CountryId = countryId;
+
+            if (!_libraryRepository.CreateLibrary(libraryMap))
+            {
+                ModelState.AddModelError("", "Something went wrong while saving");
+                return StatusCode(500, ModelState);
+            }
+
+            return Ok("Successfully created");
         }
     }
 }
