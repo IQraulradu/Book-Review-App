@@ -4,11 +4,12 @@ namespace Book_Review_App.Interface
 {
     public interface ICategoryRepository
     {
-       ICollection<Category> GetCategories();
+        ICollection<Category> GetCategories();
         Category GetCategory(int id);
-
         ICollection<Book> GetBookByCategory(int categoryId);
-
         bool CategoryExists(int id);
+
+        bool CreateCategory(Category category);
+        bool Save();
     }
 }

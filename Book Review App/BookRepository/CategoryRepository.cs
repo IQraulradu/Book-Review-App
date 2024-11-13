@@ -34,6 +34,16 @@ namespace Book_Review_App.BookRepository
             return _context.BookCategories.Where(e => e.CategoryId == categoryId).Select(b => b.Book).ToList();
         }
 
-      
+        public bool CreateCategory(Category category)
+        {
+            _context.Add(category);
+            return Save();
+        }
+
+        public bool Save()
+        {
+            var saved = _context.SaveChanges();
+            return saved > 0 ? true : false;
+        }
     }
 }
