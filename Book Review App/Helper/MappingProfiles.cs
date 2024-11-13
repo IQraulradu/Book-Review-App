@@ -15,6 +15,9 @@ namespace Book_Review_App.Helper
             CreateMap<CategoryDto, Category>();
 
             CreateMap<Country, CountryDto>();
+            CreateMap<CountryDto, Country>();
+
+
             CreateMap<Library, LibraryDto>();
             CreateMap<Review, ReviewDto>();
             CreateMap<Reviewer, ReviewerDto>();

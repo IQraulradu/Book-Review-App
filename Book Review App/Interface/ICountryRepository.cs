@@ -10,6 +10,9 @@ namespace Book_Review_App.Interface
         ICollection<Library> GetLibraryFromACountry(int countryId);
         bool CountryExists(int id);
 
+        bool CreateCountry(Country country);
+        bool Save();
+
 
     }
 }
