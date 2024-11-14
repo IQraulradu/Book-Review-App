@@ -35,5 +35,17 @@ namespace Book_Review_App.BookRepository
         {
             return _context.Reviewers.Any(r => r.Id == reviewerId);
         }
+
+        public bool CreateReviewer(Reviewer reviewerId)
+        {
+            _context.Add(reviewerId);
+            return Save();
+        }
+
+        public bool Save()
+        {
+            var saved = _context.SaveChanges();
+            return saved > 0 ? true : false;
+        }
     }
 }
