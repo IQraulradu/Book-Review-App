@@ -8,5 +8,6 @@ namespace Book_Review_App.Interface
         Review GetReview(int reviewId);
         ICollection<Review> GetReviewsOfBook(int bookId);
         bool ReviewExists(int reviewId);
+
     }
 }

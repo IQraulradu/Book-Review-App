@@ -10,6 +10,7 @@ namespace Book_Review_App.Helper
         public MappingProfiles()
         {
             CreateMap<Book, BookDto>();
+            CreateMap<BookDto, Book>();
 
             CreateMap<Category, CategoryDto>();
             CreateMap<CategoryDto, Category>();
@@ -23,6 +24,7 @@ namespace Book_Review_App.Helper
 
 
             CreateMap<Review, ReviewDto>();
+
             CreateMap<Reviewer, ReviewerDto>();
         }
     }

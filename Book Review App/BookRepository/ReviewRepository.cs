@@ -15,6 +15,9 @@ namespace Book_Review_App.BookRepository
             _mapper = mapper;
             
         }
+
+
+
         public Review GetReview(int reviewId)
         {
             return _context.Reviews.Where(r => r.Id == reviewId).FirstOrDefault();
@@ -34,5 +37,7 @@ namespace Book_Review_App.BookRepository
         {
             return _context.Reviews.Any(r => r.Id == reviewId);
         }
+
+
     }
 }

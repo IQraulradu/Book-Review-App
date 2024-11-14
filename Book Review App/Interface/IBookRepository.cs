@@ -6,8 +6,10 @@ namespace Book_Review_App.Interface
     {
         ICollection<Book> GetBooks();
         Book GetBook(int id);
-        Book GetBook(string name);
+       /* Book GetBook(string name);*/
         decimal GetBookRating(int bookId);
         bool BookExists(int bookId);
+        bool CreateBook(int libraryId, int categoryId, Book book);
+        bool Save();
     }
 }

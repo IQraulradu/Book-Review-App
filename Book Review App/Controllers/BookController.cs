@@ -83,5 +83,37 @@ namespace Book_Review_App.Controllers
             return Ok(rating);
         }
 
+        [HttpPost]
+        [ProducesResponseType(204)]
+        [ProducesResponseType(400)]
+        public IActionResult CreatePokemon([FromQuery] int libraryId, [FromQuery] int categoryId, [FromBody] BookDto bookCreate)
+        {
+            if (bookCreate == null)
+                return BadRequest(ModelState);
+
+            var books = _bookRepository.GetBooks().Where(c => c.Name.Trim().ToUpper() == bookCreate.Name.TrimEnd().ToUpper()).FirstOrDefault();
+
+            if (books != null)
+            {
+                ModelState.AddModelError("", "Book already exists");
+                return StatusCode(422, ModelState);
+            }
+
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+
+            var bookMap = _mapper.Map<Book>(bookCreate);
+
+
+            if (!_bookRepository.CreateBook(libraryId, categoryId, bookMap))
+            {
+                ModelState.AddModelError("", "Something went wrong while saving");
+                return StatusCode(500, ModelState);
+            }
+
+            return Ok("Successfully created");
+
+        }
+
     }
 }

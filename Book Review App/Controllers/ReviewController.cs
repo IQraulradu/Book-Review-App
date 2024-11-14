@@ -60,8 +60,5 @@ namespace Book_Review_App.Controllers
             return Ok(review);
         }
 
-
-
-
     }
 }
