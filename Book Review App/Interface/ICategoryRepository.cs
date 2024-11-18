@@ -8,8 +8,8 @@ namespace Book_Review_App.Interface
         Category GetCategory(int id);
         ICollection<Book> GetBookByCategory(int categoryId);
         bool CategoryExists(int id);
-
         bool CreateCategory(Category category);
+        bool UpdateCategory(Category category);
         bool Save();
     }
 }
