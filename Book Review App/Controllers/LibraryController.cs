@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Book_Review_App.BookRepository;
 using Book_Review_App.DTO;
 using Book_Review_App.Interface;
 using Book_Review_App.Models;
@@ -95,5 +96,39 @@ namespace Book_Review_App.Controllers
 
             return Ok("Successfully created");
         }
+
+        [HttpPut("libraryId")]
+        [ProducesResponseType(400)]
+        [ProducesResponseType(204)]
+        [ProducesResponseType(404)]
+        public IActionResult UpdateLibrary(int libraryId, [FromBody] LibraryDto updateLibrary)
+        {
+            if (updateLibrary == null)
+                return BadRequest(ModelState);
+
+            if (libraryId != updateLibrary.Id)
+                return BadRequest(ModelState);
+
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+
+            var libraryFromDb = _libraryRepository.GetLibrary(libraryId);
+            if (libraryFromDb == null)
+                return NotFound();
+
+            // Actualizează doar câmpurile necesare
+            libraryFromDb.Name = updateLibrary.Name;
+            libraryFromDb.Location = updateLibrary.Location;
+
+            if (!_libraryRepository.UpdateLibrary(libraryFromDb))
+            {
+                ModelState.AddModelError("", "Something went wrong updating library");
+                return StatusCode(500, ModelState);
+            }
+
+            return NoContent();
+        }
+
+
     }
 }

@@ -52,5 +52,13 @@ namespace Book_Review_App.BookRepository
             var saved = _context.SaveChanges();
             return saved > 0 ? true : false;
         }
+
+        public bool UpdateLibrary(Library library)
+        {
+            _context.Update(library);
+            return Save();
+        }
     }
 }
+
+

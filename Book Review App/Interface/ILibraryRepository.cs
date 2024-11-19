@@ -9,8 +9,8 @@ namespace Book_Review_App.Interface
         ICollection<Library> GetLibraryWithBook(int bookId);
         ICollection<Book> GetBookFromLibrary(int libraryId);
         bool LibraryExists(int libraryId);
-
         bool CreateLibrary(Library library);
+        bool UpdateLibrary(Library library);
         bool Save();
 
     }

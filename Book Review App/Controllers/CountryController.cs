@@ -103,6 +103,9 @@ namespace Book_Review_App.Controllers
             if (countryId != updateCountry.Id)
                 return BadRequest(ModelState);
 
+            if (!_countryRepository.CountryExists(countryId))
+                return NotFound();
+
             if(!ModelState.IsValid)
                 return BadRequest(ModelState);
 
