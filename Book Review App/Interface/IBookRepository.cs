@@ -10,6 +10,7 @@ namespace Book_Review_App.Interface
         decimal GetBookRating(int bookId);
         bool BookExists(int bookId);
         bool CreateBook(int libraryId, int categoryId, Book book);
+        bool UpdateBook(int libraryId, int categoryId, Book book);
         bool Save();
     }
 }

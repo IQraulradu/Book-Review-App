@@ -11,11 +11,14 @@ namespace Book_Review_App.Controllers
     public class BookController : Controller
     {
         private readonly IBookRepository _bookRepository;
+        private readonly IReviewRepository _reviewRepository;
         private readonly IMapper _mapper;
 
-        public BookController(IBookRepository bookRepository, IMapper mapper)
+        public BookController(IBookRepository bookRepository, IMapper mapper, IReviewRepository reviewRepository)
         {
             _bookRepository = bookRepository;
+            _reviewRepository = reviewRepository;
+       
             _mapper = mapper;
         }
 
@@ -114,6 +117,38 @@ namespace Book_Review_App.Controllers
             return Ok("Successfully created");
 
         }
+
+        [HttpPut("bookId")]
+        [ProducesResponseType(400)]
+        [ProducesResponseType(204)]
+        [ProducesResponseType(404)]
+        public IActionResult UpdateBook(int bookId, [FromQuery] int libraryId, [FromQuery] int categoryId, [FromBody] BookDto updateBook)
+        {
+            if (updateBook == null)
+                return BadRequest(ModelState);
+
+            if (bookId != updateBook.Id)
+                return BadRequest(ModelState);
+
+            if(!_bookRepository.BookExists(bookId))
+                return NotFound();
+
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+
+            var bookMap = _mapper.Map<Book>(updateBook);
+
+            if (!_bookRepository.UpdateBook(libraryId, categoryId, bookMap))
+            {
+                ModelState.AddModelError("", "Something went wrong updating owner");
+                return StatusCode(500, ModelState);
+                    
+            }
+
+            return NoContent();
+
+        }
+
 
     }
 }
