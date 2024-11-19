@@ -91,5 +91,31 @@ namespace Book_Review_App.Controllers
             return Ok("Successfully created");
         }
 
+        [HttpPut("countryId")]
+        [ProducesResponseType(400)]
+        [ProducesResponseType(204)]
+        [ProducesResponseType(404)]
+        public IActionResult UpdateCountry(int countryId, [FromBody] CountryDto updateCountry)
+        {
+            if (updateCountry == null)
+                return BadRequest(ModelState);
+
+            if (countryId != updateCountry.Id)
+                return BadRequest(ModelState);
+
+            if(!ModelState.IsValid)
+                return BadRequest(ModelState);
+
+            var countryMap = _mapper.Map<Country>(updateCountry);
+
+            if (!_countryRepository.UpdateCountry(countryMap))
+            {
+                ModelState.AddModelError("", "Something went wrong updating country");
+                return StatusCode(500, ModelState);
+            }
+
+            return NoContent();       
+        }
+
     }
 }
