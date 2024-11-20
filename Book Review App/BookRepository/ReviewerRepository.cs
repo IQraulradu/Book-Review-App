@@ -47,5 +47,11 @@ namespace Book_Review_App.BookRepository
             var saved = _context.SaveChanges();
             return saved > 0 ? true : false;
         }
+
+        public bool UpdateReviewer(Reviewer reviewerId)
+        {
+           _context.Update(reviewerId);
+            return Save();
+        }
     }
 }
