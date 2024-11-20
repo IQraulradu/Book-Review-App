@@ -116,7 +116,6 @@ namespace Book_Review_App.Controllers
             if (libraryFromDb == null)
                 return NotFound();
 
-            // Actualizează doar câmpurile necesare
             libraryFromDb.Name = updateLibrary.Name;
             libraryFromDb.Location = updateLibrary.Location;
 
