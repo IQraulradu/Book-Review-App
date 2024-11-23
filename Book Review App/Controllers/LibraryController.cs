@@ -129,5 +129,33 @@ namespace Book_Review_App.Controllers
         }
 
 
+        [HttpDelete("{libraryId}")]
+        [ProducesResponseType(400)]
+        [ProducesResponseType(204)]
+        [ProducesResponseType(404)]
+
+        public IActionResult DeleteLibrary(int libraryId)
+        {
+            if (!_libraryRepository.LibraryExists(libraryId))
+            {
+                return NotFound();
+            }
+
+            var libraryToDelete = _libraryRepository.GetLibrary(libraryId);
+
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+
+            if (!_libraryRepository.DeleteLibrary(libraryToDelete))
+            {
+                ModelState.AddModelError("", "Something went wrong deleting library");
+                return StatusCode(500, ModelState);
+            }
+
+            return NoContent();
+
+        }
+
+
     }
 }

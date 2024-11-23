@@ -11,6 +11,7 @@ namespace Book_Review_App.Interface
         bool LibraryExists(int libraryId);
         bool CreateLibrary(Library library);
         bool UpdateLibrary(Library library);
+        bool DeleteLibrary(Library library);
         bool Save();
 
     }

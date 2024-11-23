@@ -58,6 +58,12 @@ namespace Book_Review_App.BookRepository
             _context.Update(library);
             return Save();
         }
+
+        public bool DeleteLibrary(Library library)
+        {
+            _context.Remove(library);
+            return Save();
+        }
     }
 }
 
