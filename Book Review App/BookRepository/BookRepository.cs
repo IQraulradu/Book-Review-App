@@ -77,5 +77,11 @@ namespace Book_Review_App.BookRepository
             _context.Update(book);
             return Save();
         }
+
+        public bool DeleteBook(Book book)
+        {
+            _context.Remove(book);
+            return Save();
+        }
     }
 }

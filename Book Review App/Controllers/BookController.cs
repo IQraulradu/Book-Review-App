@@ -22,7 +22,6 @@ namespace Book_Review_App.Controllers
             _mapper = mapper;
         }
 
-   
 
         [HttpGet]
         [ProducesResponseType(200, Type = typeof(IEnumerable<Book>))]
@@ -146,8 +145,36 @@ namespace Book_Review_App.Controllers
             }
 
             return NoContent();
-
         }
+
+        [HttpDelete("{bookId}")]
+        [ProducesResponseType(400)]
+        [ProducesResponseType(204)]
+        [ProducesResponseType(404)]
+
+        public IActionResult DeleteBook(int bookId)
+        {
+            if (!_bookRepository.BookExists(bookId))
+            {
+                return NotFound();
+            }
+
+            var bookToDelete = _bookRepository.GetBook(bookId);
+
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+
+            if (_bookRepository.DeleteBook(bookToDelete))
+            {
+                ModelState.AddModelError("", "Something went wrong deleting book");
+                return StatusCode(500, ModelState);
+            }
+
+            return NoContent();
+        }
+
+
+
 
 
     }
