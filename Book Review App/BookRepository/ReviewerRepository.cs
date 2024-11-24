@@ -53,5 +53,11 @@ namespace Book_Review_App.BookRepository
            _context.Update(reviewerId);
             return Save();
         }
+
+        public bool DeleteReviewer(Reviewer reviewerId)
+        {
+            _context.Remove(reviewerId);
+            return Save();
+        }
     }
 }
