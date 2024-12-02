@@ -1,4 +1,6 @@
-﻿namespace Book_Review_App.Models
+﻿using Book_Review_App.Models.UserManagment;
+
+namespace Book_Review_App.Models
 {
     public class Book
     {
@@ -12,6 +14,9 @@
         public ICollection<BookLibrary> BookLibraries { get; set; } 
         // Relationship 1-M with Review
         public ICollection<Review> Reviews { get; set; }
+
+        public ICollection<FavoriteBook> FavoriteBooks { get; set; }
+        public ICollection<BorrowedBook> BorrowedBooks { get; set; }
 
 
     }
