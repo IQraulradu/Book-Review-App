@@ -1,8 +1,6 @@
 ﻿using AutoMapper;
 using Book_Review_App.DTO;
-using Book_Review_App.DTO.UserManagmentDTO;
 using Book_Review_App.Models;
-using Book_Review_App.Models.UserManagment;
 
 namespace Book_Review_App.Helper
 {
@@ -30,17 +28,6 @@ namespace Book_Review_App.Helper
 
             CreateMap<Reviewer, ReviewerDto>();
             CreateMap<ReviewerDto, Reviewer>();
-
-            //UserManagment
-            CreateMap<User, UserDto>();
-            CreateMap<UserDto, User>();
-
-            CreateMap<BorrowedBook, BorrowedBookDto>();
-            CreateMap<BorrowedBookDto, BorrowedBook>();
-
-            CreateMap<FavoriteBook, FavoriteBookDto>();
-            CreateMap<FavoriteBookDto, FavoriteBook>();
-
         }
     }
    

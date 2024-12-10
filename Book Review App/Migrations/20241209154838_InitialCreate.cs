@@ -67,6 +67,19 @@ namespace Book_Review_App.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Role",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Role", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "BookCategories",
                 columns: table => new
                 {
@@ -141,6 +154,28 @@ namespace Book_Review_App.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "User",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    FirstName = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    LastName = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Email = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    RoleId = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_User", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_User_Role_RoleId",
+                        column: x => x.RoleId,
+                        principalTable: "Role",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "BookLibraries",
                 columns: table => new
                 {
@@ -164,6 +199,61 @@ namespace Book_Review_App.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
+            migrationBuilder.CreateTable(
+                name: "BorrowedBook",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Status = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    BorrowedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    DueDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    UserId = table.Column<int>(type: "int", nullable: false),
+                    BookId = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_BorrowedBook", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_BorrowedBook_Books_BookId",
+                        column: x => x.BookId,
+                        principalTable: "Books",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_BorrowedBook_User_UserId",
+                        column: x => x.UserId,
+                        principalTable: "User",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "FavoriteBook",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    UserId = table.Column<int>(type: "int", nullable: false),
+                    BookId = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_FavoriteBook", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_FavoriteBook_Books_BookId",
+                        column: x => x.BookId,
+                        principalTable: "Books",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_FavoriteBook_User_UserId",
+                        column: x => x.UserId,
+                        principalTable: "User",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
             migrationBuilder.CreateIndex(
                 name: "IX_BookCategories_CategoryId",
                 table: "BookCategories",
@@ -173,6 +263,26 @@ namespace Book_Review_App.Migrations
                 name: "IX_BookLibraries_LibraryId",
                 table: "BookLibraries",
                 column: "LibraryId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_BorrowedBook_BookId",
+                table: "BorrowedBook",
+                column: "BookId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_BorrowedBook_UserId",
+                table: "BorrowedBook",
+                column: "UserId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_FavoriteBook_BookId",
+                table: "FavoriteBook",
+                column: "BookId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_FavoriteBook_UserId",
+                table: "FavoriteBook",
+                column: "UserId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Libraries_CountryId",
@@ -188,6 +298,11 @@ namespace Book_Review_App.Migrations
                 name: "IX_Reviews_ReviewerId",
                 table: "Reviews",
                 column: "ReviewerId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_User_RoleId",
+                table: "User",
+                column: "RoleId");
         }
 
         /// <inheritdoc />
@@ -200,6 +315,12 @@ namespace Book_Review_App.Migrations
                 name: "BookLibraries");
 
             migrationBuilder.DropTable(
+                name: "BorrowedBook");
+
+            migrationBuilder.DropTable(
+                name: "FavoriteBook");
+
+            migrationBuilder.DropTable(
                 name: "Reviews");
 
             migrationBuilder.DropTable(
@@ -209,6 +330,9 @@ namespace Book_Review_App.Migrations
                 name: "Libraries");
 
             migrationBuilder.DropTable(
+                name: "User");
+
+            migrationBuilder.DropTable(
                 name: "Books");
 
             migrationBuilder.DropTable(
@@ -216,6 +340,9 @@ namespace Book_Review_App.Migrations
 
             migrationBuilder.DropTable(
                 name: "Countries");
+
+            migrationBuilder.DropTable(
+                name: "Role");
         }
     }
 }

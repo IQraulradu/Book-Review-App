@@ -191,6 +191,109 @@ namespace Book_Review_App.Migrations
                     b.ToTable("Reviewers");
                 });
 
+            modelBuilder.Entity("Book_Review_App.Models.UserManagment.BorrowedBook", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("BookId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("BorrowedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("DueDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Status")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("UserId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("BookId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("BorrowedBook");
+                });
+
+            modelBuilder.Entity("Book_Review_App.Models.UserManagment.FavoriteBook", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("BookId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("UserId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("BookId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("FavoriteBook");
+                });
+
+            modelBuilder.Entity("Book_Review_App.Models.UserManagment.Role", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Role");
+                });
+
+            modelBuilder.Entity("Book_Review_App.Models.UserManagment.User", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Email")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("FirstName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("LastName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("RoleId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("RoleId");
+
+                    b.ToTable("User");
+                });
+
             modelBuilder.Entity("Book_Review_App.Models.BookCategory", b =>
                 {
                     b.HasOne("Book_Review_App.Models.Book", "Book")
@@ -259,11 +362,64 @@ namespace Book_Review_App.Migrations
                     b.Navigation("Reviewer");
                 });
 
+            modelBuilder.Entity("Book_Review_App.Models.UserManagment.BorrowedBook", b =>
+                {
+                    b.HasOne("Book_Review_App.Models.Book", "Book")
+                        .WithMany("BorrowedBooks")
+                        .HasForeignKey("BookId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Book_Review_App.Models.UserManagment.User", "User")
+                        .WithMany("BorrowedBooks")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Book");
+
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("Book_Review_App.Models.UserManagment.FavoriteBook", b =>
+                {
+                    b.HasOne("Book_Review_App.Models.Book", "Book")
+                        .WithMany("FavoriteBooks")
+                        .HasForeignKey("BookId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Book_Review_App.Models.UserManagment.User", "User")
+                        .WithMany("FavoriteBooks")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Book");
+
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("Book_Review_App.Models.UserManagment.User", b =>
+                {
+                    b.HasOne("Book_Review_App.Models.UserManagment.Role", "Role")
+                        .WithMany("Users")
+                        .HasForeignKey("RoleId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Role");
+                });
+
             modelBuilder.Entity("Book_Review_App.Models.Book", b =>
                 {
                     b.Navigation("BookCategories");
 
                     b.Navigation("BookLibraries");
+
+                    b.Navigation("BorrowedBooks");
+
+                    b.Navigation("FavoriteBooks");
 
                     b.Navigation("Reviews");
                 });
@@ -286,6 +442,18 @@ namespace Book_Review_App.Migrations
             modelBuilder.Entity("Book_Review_App.Models.Reviewer", b =>
                 {
                     b.Navigation("Reviews");
+                });
+
+            modelBuilder.Entity("Book_Review_App.Models.UserManagment.Role", b =>
+                {
+                    b.Navigation("Users");
+                });
+
+            modelBuilder.Entity("Book_Review_App.Models.UserManagment.User", b =>
+                {
+                    b.Navigation("BorrowedBooks");
+
+                    b.Navigation("FavoriteBooks");
                 });
 #pragma warning restore 612, 618
         }

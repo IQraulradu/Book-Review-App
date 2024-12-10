@@ -48,6 +48,11 @@ namespace Book_Review_App.Data
                 .WithMany(c => c.BookCategories)
                 .HasForeignKey(bc => bc.CategoryId);
 
+            modelBuilder.Entity<BookCategory>()
+               .HasKey(bc => new { bc.BookId, bc.CategoryId });
+
+
+
             //Relationship One to many between Library and Country
 
             modelBuilder.Entity<Library>()

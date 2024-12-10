@@ -9,6 +9,8 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
+
+//Book
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddTransient<Seed>();
@@ -27,6 +29,8 @@ builder.Services.AddScoped<IReviewRepository, ReviewRepository>();
 builder.Services.AddScoped<IReviewerRepository, ReviewerRepository>();
 builder.Services.AddControllers();
 
+
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -38,8 +42,8 @@ if (app.Environment.IsDevelopment())
 
 using (var scope = app.Services.CreateScope())
 {
-    var services = scope.ServiceProvider;
-    var seed = services.GetRequiredService<Seed>();
+    var dataContext = scope.ServiceProvider.GetRequiredService<DataContext>();
+    var seed = scope.ServiceProvider.GetRequiredService<Seed>();
     seed.SeedDataContext();
 }
 
